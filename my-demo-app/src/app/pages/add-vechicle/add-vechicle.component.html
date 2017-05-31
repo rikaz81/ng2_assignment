@@ -1,0 +1,185 @@
+<div class="container">
+  <form [formGroup]="userForm" (ngSubmit)="handleForSubmit(userForm)">
+    <div class="form-horizontal">
+      <fieldset>
+        <legend>Add Vechicle to Sale</legend>
+
+        <div class="form-group">
+          <label for="select" class="col-lg-2 control-label">Brand</label>
+          <div class="col-lg-4">
+            <select class="form-control" id="brand" formControlName="brand" placeholder="Vechicle Brand" name="brand">   
+            <option value="">-- select --</option> 
+                  
+            <option *ngFor="let brand of brands"  value={{brand.value}}>{{brand.text}}</option>   
+                
+        </select>
+
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="inputEmail" class="col-lg-2 control-label">Model</label>
+          <div class="col-lg-4">
+            <input type="text" class="form-control" id="vechicleModel" formControlName="vechicleModel" name="vechicleModel" placeholder="Vechicle Model">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="select" let class="col-lg-2 control-label">Transmission</label>
+
+          <div class="col-lg-4">
+            <select class="form-control" id="transmission" formControlName="transmission" placeholder="Transmission" name="transmission">    
+               <option *ngFor="let trs of transmissions"  value={{trs.value}}>{{trs.label}}</option>             
+        </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="select" class="col-lg-2 control-label">Vechicle Type</label>
+          <div class="col-lg-4">
+            <select class="form-control" id="vtype" formControlName="vtype" placeholder="Vechicle Type" name="vtype">        
+            <option value="">-- select --</option>    
+                <option value="bus">Bus</option>
+                <option value="car">Car</option>
+                <option value="motorcycle">Motorcycle</option>
+                <option value="pick_up">Pickup</option>
+                <option value="suv">SUV</option>
+                <option value="truck">Truck</option>
+                <option value="van">Van</option>
+                <option value="other">Other</option>             
+        </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="select" class="col-lg-2 control-label">Condition</label>
+          <div class="col-lg-4">
+            <select class="form-control" id="condition" formControlName="condition" placeholder="Condition" name="condition">    
+                <option value="">-- select --</option>
+                
+                   <option *ngFor="let condition of conditions"  value={{condition.value}}>{{condition.text}}</option>  
+             
+        </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="inputEmail" class="col-lg-2 control-label">Model Year</label>
+          <div class="col-lg-4">
+            <input type="text" class="form-control" formControlName="modelYear" id="modelYear" name="modelYear" placeholder="Model Year">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="inputEmail" class="col-lg-2 control-label">Mileage (km)</label>
+          <div class="input-group col-lg-4">
+            <input type="text" class="form-control" formControlName="mileAge" id="mileAge" name="mileAge" placeholder="Mileage (Km)">
+            <span class="input-group-addon">Km</span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="inputEmail" class="col-lg-2 control-label">Price</label>
+          <div class="input-group col-lg-4">
+            <span class="input-group-addon">LKR</span><input type="text" class="form-control" id="price" formControlName="price"
+              name="price" placeholder="Price (Rs)">
+            <span class="input-group-addon">
+            <input id="fields-price-negotiable" name="priceNegotiable" formControlName="priceNegotiable" value="1" type="checkbox" class="ui-checkbox">            Negotiable
+</span>
+          </div>
+        </div>
+
+
+
+
+
+
+
+        <div class="form-group" formArrayName="fuelTypes">
+          <label for="inputPassword" class="col-lg-2 control-label">Fuel type</label>
+          <div class="col-lg-6">
+
+            <div class="checkbox" *ngFor="let item of fuelType;let i=index">
+
+              <label>              
+                <input type="checkbox" [name]="fuelType"  >{{item.text}}</label>
+              <!--<input type="checkbox" [name]="'fuelType'" [formControlName]="i">-->
+
+              <!--<label>           
+                
+            <input type="checkbox" [name]="'fuelType'" value="P" [formControlName]="i"  class="field_fuel_type" >
+            Petrol
+          </label>
+              <label>           
+            <input type="checkbox" [name]="'fuelType'" value="D" [formControlName]="'i=2'" class="field_fuel_type" >
+            Diesel
+          </label>
+              <label>           
+            <input type="checkbox" [name]="'fuelType'" value="H" [formControlName]="i"  class="field_fuel_type" >
+            Hybrid
+          </label>-->
+              <!--  <label>           
+            <input type="checkbox" name="fuel_type[]" value="E" class="field_fuel_type" id="field_fuel_type">
+            Electric
+          </label>
+              <label>           
+            <input type="checkbox" name="fuel_type[]" value="G" class="field_fuel_type" id="field_fuel_type">
+            Gas
+          </label>
+              <label>           
+            <input type="checkbox" name="fuel_type[]" value="O" class="field_fuel_type" id="field_fuel_type">
+            Other
+          </label>-->
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="inputEmail" class="col-lg-2 control-label">Image URL</label>
+          <div class="col-lg-4">
+            <input type="text" class="form-control" id="imgUrl" formControlName="imgUrl" name="imgUrl" placeholder="http://www.copyright-free-photos.org.uk/cars/mini-cooper.jpg">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="textArea" class="col-lg-2 control-label">Description</label>
+          <div class="col-lg-10">
+            <textarea class="form-control" rows="3" id="description" name="description"></textarea>
+            <span class="help-block">A longer block of help text that breaks onto a new line and may extend beyond one line.</span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="inputEmail" class="col-lg-2 control-label">Contact Person Name</label>
+          <div class="col-lg-4">
+            <input type="text" class="form-control" id="contactName" formControlName="contactName" name="contactName" placeholder="Contact Person Name">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="inputEmail" class="col-lg-2 control-label">Phone No</label>
+          <div class="col-lg-4">
+            <input type="text" class="form-control" id="contactPhone" formControlName="contactPhone" name="contactPhone" placeholder="Contact No">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="inputEmail" class="col-lg-2 control-label">Place</label>
+          <div class="col-lg-4">
+            <input type="text" class="form-control" id="contactPlace" formControlName="contactPlace" name="contactPlace" placeholder="Location">
+          </div>
+        </div>
+
+        <!--<div class="form-group">
+          <label for="textArea" class="col-lg-2 control-label">Contact Details</label>
+          <div class="col-lg-10">
+            <textarea class="form-control" rows="3" id="description" name="description"></textarea>
+
+          </div>
+        </div>-->
+
+        <div class="form-group">
+          <div class="col-lg-10 col-lg-offset-2">
+            <button type="reset" class="btn btn-default">Cancel</button>
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </div>
+        </div>
+      </fieldset>
+    </div>
+  </form>
+</div>

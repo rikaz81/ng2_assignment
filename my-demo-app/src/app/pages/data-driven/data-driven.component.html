@@ -1,0 +1,86 @@
+<div class="container">
+  <form class="form-horizontal" [formGroup]="userForm" (ngSubmit)="handleForSubmit()">
+
+    <div formGroupName="userData">
+      <div class="form-group">
+        <label for="" class="col-lg-2 control-label">Username</label>
+        <div class="col-md-8">
+          <input type="text" name="username" formControlName="username" class="form-control">
+        </div>
+        <div *ngIf="!userForm.controls['userData'].controls['username'].valid" class="warn">
+          Username is required
+        </div>
+
+      </div>
+      <div class="form-group">
+        <label for="" class="col-lg-2 control-label">Email</label>
+        <div class="col-md-8">
+          <input type="text" name="email" formControlName="email" class="form-control">
+        </div>
+        <div *ngIf="!userForm.controls['userData'].controls['email'].valid">
+          Email is required
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div class="form-group">
+      <label for="" class="col-lg-2 control-label">Password</label>
+      <div class="col-md-8">
+        <input type="text" name="password" [(ngModel)]="password" formControlName="password" class="form-control">
+      </div>
+      <div *ngIf="!userForm.controls['password'].valid">
+        Password is required
+      </div>
+
+    </div>
+
+    <div class="form-group">
+      <label for="" class="col-lg-2 control-label">Re-Type Password</label>
+      <div class="col-md-8">
+        <input type="text" name="retype" formControlName="retype" class="form-control">
+      </div>
+      <div *ngIf="!userForm.controls['retype'].valid">
+        Something wrong
+      </div>
+
+    </div>
+
+ 
+
+
+<div formArrayName="hobbies">
+
+   <div class="form-group" *ngFor="let item of userForm.controls['hobbies'].controls; let i=index">
+      <label for="" class="col-lg-2 control-label">{{i+1}}. Hobby Name</label>
+      <div class="col-md-8">
+        <input type="text" [name]="'hobby'" [formControlName]="i" class="form-control">
+      </div>
+      
+
+    </div>
+
+
+</div>
+
+
+    <div class="form-group">
+
+      <div class="col-md-8">
+        <button type="submit" class="form-control">Submit</button>
+      </div>
+      <div class="col-md-4">
+        <button type="button" class="form-control" (click)="addNewHobby()">Add New Hobby</button>
+      </div>
+
+    </div>
+
+
+  </form>
+
+
+
+
+</div>
