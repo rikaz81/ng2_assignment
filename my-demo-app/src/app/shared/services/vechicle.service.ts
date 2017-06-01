@@ -19,6 +19,7 @@ export interface VechicleTO {
   contactName: string,
   contactPlace: string,
   contactPhone: string,
+  description: string,
   imgUrl: string
 };
 
@@ -56,18 +57,19 @@ export class VechicleService {
         vechicle.vtype = item.vtype;
         vechicle.condition = item.condition;
         vechicle.modelYear = item.modelYear;
-        // vechicle.mileAge = item.mileAge;
-        // vechicle.price = item.price;
-        // vechicle.priceNegotiable = item.priceNegotiable;
+        vechicle.mileAge = item.mileAge;
+        vechicle.price = item.price;
+        vechicle.priceNegotiable = item.priceNegotiable;
         // vechicle.fuelTypes = item.fuelTypes;
         vechicle.contactName = item.contactName;
         vechicle.contactPlace = item.contactPlace;
         vechicle.contactPhone = item.contactPhone;
+        vechicle.description = item.description;
         vechicle.imgUrl = item.imgUrl;
 
-
-
-
+        if (vechicle.imgUrl == null || vechicle.imgUrl == "") {
+          vechicle.imgUrl = "http://www.copyright-free-photos.org.uk/cars/mini-cooper.jpg";
+        }
 
 
         return vechicle;
@@ -105,16 +107,8 @@ export class VechicleService {
   }
 
   deleteVechicleFromSale(itemId: string) {
-    // return this.http
-    //         .delete(url + "/?" + key + "=" + val, this.options)
-    //         .map(this.extractData)
-    //         .catch(this.handleError);
-
 
     console.log('Service deleteVechicleFromSale ', itemId);
-    // return this.http.delete(URL_CONST.BACK_END_HOST + 'vechicle/' + itemId, { headers: this.getHeader() })
-    //   .map(this.extractData)
-    //   .catch(this.handleErrorPromise);
 
     return this.http.delete(URL_CONST.BACK_END_HOST + 'vechicle/' + itemId, { headers: this.getHeader() }).toPromise()
       .then(this.extractData)

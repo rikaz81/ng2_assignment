@@ -32,10 +32,16 @@ router.post('/', (req, res) => {
     vechicle.vtype = req.body.vtype;
     vechicle.condition = req.body.condition;
     vechicle.modelYear = req.body.modelYear;
+    vechicle.mileAge = req.body.mileAge;
+    vechicle.price = req.body.price;
+    vechicle.priceNegotiable = req.body.priceNegotiable;
     vechicle.contactName = req.body.contactName;
     vechicle.contactPlace = req.body.contactPlace;
     vechicle.contactPhone = req.body.contactPhone;
+    vechicle.description = req.body.description;
     vechicle.imgUrl = req.body.imgUrl;
+    
+    // vechicle.imgUrl = 'http://www.copyright-free-photos.org.uk/cars/mini-cooper.jpg';
 
     vechicle.save((err, data) => {
         if (err)
@@ -53,7 +59,7 @@ router.post('/', (req, res) => {
 
 
 //delete wizard
-router.delete('/vdel/:id', (req, res) => {
+router.delete('/:id', (req, res) => {
     console.log(`Vechicle Wizard of ID ---> ${req.params.id}`);
 
 
@@ -73,15 +79,15 @@ router.delete('/vdel/:id', (req, res) => {
 
 
 //view vechicle by ID
-router.get('/vbyid/:id', (req, res) => {
+router.get('/:id', (req, res) => {
     // res.send(`View Wizard of ID ---> ${req.params.id}`);
-console.log(`Vechicle By Id ---> ${req.params.id}`);
+    console.log(`Vechicle By Id ---> ${req.params.id}`);
     Vechicle.findById(`${req.params.id}`, (err, vechicle) => {
-        if (err){
+        if (err) {
             // res.send(err);
             console.log(err);
         }
-            
+
 
         res.json(vechicle);
 
@@ -92,7 +98,48 @@ console.log(`Vechicle By Id ---> ${req.params.id}`);
 });
 
 
+//edit Vechicle
+router.put('/:id', (req, res) => {
 
+    console.log('Update Vechicle Request ', req.params.id, req.body);
+    Vechicle.findById(req.params.id, (err, vechicle) => {
+        if (err)
+            res.send(err);
+
+
+        vechicle.brand = req.body.brand;
+        vechicle.vechicleModel = req.body.vechicleModel;
+        vechicle.transmission = req.body.transmission;
+        vechicle.vtype = req.body.vtype;
+        vechicle.condition = req.body.condition;
+        vechicle.modelYear = req.body.modelYear;
+        vechicle.mileAge = req.body.mileAge;
+        vechicle.price = req.body.price;
+        // vechicle.priceNegotiable = req.body.priceNegotiable;
+        vechicle.contactName = req.body.contactName;
+        vechicle.contactPlace = req.body.contactPlace;
+        vechicle.contactPhone = req.body.contactPhone;
+        vechicle.description = req.body.description;
+        vechicle.imgUrl = req.body.imgUrl;
+
+
+
+        vechicle.save((err, data) => {
+            if (err)
+                res.send(err);
+
+            res.json({
+                message: 'Vechicle Updated Successfully!',
+                data: data
+            });
+
+        });
+    });
+
+
+
+
+});
 
 
 

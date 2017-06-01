@@ -130,6 +130,7 @@ app.use(__WEBPACK_IMPORTED_MODULE_1_body_parser___default.a.json());
 
 app.set('port', 3000);
 
+__WEBPACK_IMPORTED_MODULE_5_mongoose___default.a.Promise = global.Promise;
 //connect to mongoDB instance created on mongoLabs
 __WEBPACK_IMPORTED_MODULE_5_mongoose___default.a.connect('mongodb://root:root@ds133231.mlab.com:33231/hogwarts');
 
@@ -142,22 +143,42 @@ app.get('/', function (req, res) {
 });
 
 //middleware ex: implementation of authentication
-app.use('/wizard', function (req, res, next) {
-    console.log("something happened");
-    var token = req.headers['x-access-token'];
-    if (!token) {
-        res.status(401).json({ message: "Not Authorized" });
-    } else {
-        __WEBPACK_IMPORTED_MODULE_6_jsonwebtoken___default.a.verify(token, __WEBPACK_IMPORTED_MODULE_7__config__["a" /* CONFIG */].secretKey, function (err, decoded) {
-            if (err) {
-                res.status(401).json({ message: "Invalid Token" });
-            } else {
-                req.decoded = decoded;
-                next();
-            }
-        });
-    }
-});
+// app.use('/wizard', (req, res, next) => {
+//     console.log("something happened");
+//     let token = req.headers['x-access-token'];
+//     if (!token) {
+//         res.status(401).json({ message: "Not Authorized" });
+//     } else {
+//         jwt.verify(token, CONFIG.secretKey, (err, decoded) => {
+//             if (err) {
+//                 res.status(401).json({ message: "Invalid Token" });
+//             } else {
+//                 req.decoded = decoded;
+//                 next();
+//             }
+//         });
+//     }
+// });
+
+//skipauthentication temp
+// app.use('/wizard', (req, res) => {
+//     console.log("something happened");
+//     let token = req.headers['x-access-token'];
+//     // next();
+//     // if (!token) {
+//     //     res.status(401).json({ message: "Not Authorized" });
+//     // } else {
+//     //     jwt.verify(token, CONFIG.secretKey, (err, decoded) => {
+//     //         if (err) {
+//     //             res.status(401).json({ message: "Invalid Token" });
+//     //         } else {
+//     //             req.decoded = decoded;
+//     //             next();
+//     //         }
+//     //     });
+//     // }
+// });
+
 
 app.use('/vechicle', function (req, res, next) {
 
@@ -239,7 +260,6 @@ var User = __WEBPACK_IMPORTED_MODULE_0_mongoose___default.a.model('User', user);
 var Schema = __WEBPACK_IMPORTED_MODULE_0_mongoose___default.a.Schema;
 
 var vechicle = new Schema({
-    _id: String,
     brand: String,
     vechicleModel: String,
     transmission: String,
@@ -253,6 +273,7 @@ var vechicle = new Schema({
     contactName: String,
     contactPlace: String,
     contactPhone: String,
+    description: String,
     imgUrl: String
 });
 
@@ -380,10 +401,16 @@ router.post('/', function (req, res) {
     vechicle.vtype = req.body.vtype;
     vechicle.condition = req.body.condition;
     vechicle.modelYear = req.body.modelYear;
+    vechicle.mileAge = req.body.mileAge;
+    vechicle.price = req.body.price;
+    vechicle.priceNegotiable = req.body.priceNegotiable;
     vechicle.contactName = req.body.contactName;
     vechicle.contactPlace = req.body.contactPlace;
     vechicle.contactPhone = req.body.contactPhone;
+    vechicle.description = req.body.description;
     vechicle.imgUrl = req.body.imgUrl;
+
+    // vechicle.imgUrl = 'http://www.copyright-free-photos.org.uk/cars/mini-cooper.jpg';
 
     vechicle.save(function (err, data) {
         if (err) res.send(err);
@@ -398,7 +425,7 @@ router.post('/', function (req, res) {
 });
 
 //delete wizard
-router.delete('/vdel/:id', function (req, res) {
+router.delete('/:id', function (req, res) {
     console.log('Vechicle Wizard of ID ---> ' + req.params.id);
 
     __WEBPACK_IMPORTED_MODULE_1__models_vechicle_model__["a" /* Vechicle */].remove({ _id: req.params.id }, function (err, data) {
@@ -413,7 +440,7 @@ router.delete('/vdel/:id', function (req, res) {
 });
 
 //view vechicle by ID
-router.get('/vbyid/:id', function (req, res) {
+router.get('/:id', function (req, res) {
     // res.send(`View Wizard of ID ---> ${req.params.id}`);
     console.log('Vechicle By Id ---> ' + req.params.id);
     __WEBPACK_IMPORTED_MODULE_1__models_vechicle_model__["a" /* Vechicle */].findById('' + req.params.id, function (err, vechicle) {
@@ -423,6 +450,39 @@ router.get('/vbyid/:id', function (req, res) {
         }
 
         res.json(vechicle);
+    });
+});
+
+//edit Vechicle
+router.put('/:id', function (req, res) {
+
+    console.log('Update Vechicle Request ', req.params.id, req.body);
+    __WEBPACK_IMPORTED_MODULE_1__models_vechicle_model__["a" /* Vechicle */].findById(req.params.id, function (err, vechicle) {
+        if (err) res.send(err);
+
+        vechicle.brand = req.body.brand;
+        vechicle.vechicleModel = req.body.vechicleModel;
+        vechicle.transmission = req.body.transmission;
+        vechicle.vtype = req.body.vtype;
+        vechicle.condition = req.body.condition;
+        vechicle.modelYear = req.body.modelYear;
+        vechicle.mileAge = req.body.mileAge;
+        vechicle.price = req.body.price;
+        // vechicle.priceNegotiable = req.body.priceNegotiable;
+        vechicle.contactName = req.body.contactName;
+        vechicle.contactPlace = req.body.contactPlace;
+        vechicle.contactPhone = req.body.contactPhone;
+        vechicle.description = req.body.description;
+        vechicle.imgUrl = req.body.imgUrl;
+
+        vechicle.save(function (err, data) {
+            if (err) res.send(err);
+
+            res.json({
+                message: 'Vechicle Updated Successfully!',
+                data: data
+            });
+        });
     });
 });
 
@@ -450,9 +510,9 @@ router.get('/', function (req, res) {
     __WEBPACK_IMPORTED_MODULE_1__models_wizard_model__["a" /* Wizard */].find(function (err, wizards) {
         if (err) res.send(err);
 
-        // res.json(wizards);
+        res.json(wizards);
 
-        res.json({ 'data': wizards, 'decoded': req.decoded._doc });
+        // res.json({ 'data': wizards, 'decoded': req.decoded._doc });
     });
 });
 

@@ -19,6 +19,7 @@ export interface VechicleTO {
   contactName: string,
   contactPlace: string,
   contactPhone: string,
+  description: string,
   imgUrl: string
 };
 
@@ -56,6 +57,7 @@ export class AddVechicleComponent implements OnInit {
       'contactName': ['', [Validators.required]],
       'contactPlace': ['', [Validators.required]],
       'contactPhone': ['', [Validators.required]],
+      'description': ['', []],
       'imgUrl': ['', []],
       'fuelTypes': formBuilder.array([
         [
@@ -72,10 +74,10 @@ export class AddVechicleComponent implements OnInit {
   }
   handleForSubmit(form) {
     // console.log('Form Submitted ', form.value);
-    // console.log(this.userForm.value);
+    console.log(this.userForm.value);
 
 
-    console.log(this.userForm.value['brand']);
+    console.log(this.userForm.value['imgUrl']);
     //  let vechicle :VechicleTO = null;
     let vechicle: VechicleTO = <VechicleTO>{};
     vechicle.brand = this.userForm.value['brand'];
@@ -84,13 +86,18 @@ export class AddVechicleComponent implements OnInit {
     vechicle.vtype = this.userForm.value['vtype'];
     vechicle.condition = this.userForm.value['condition'];
     vechicle.modelYear = this.userForm.value['modelYear'];
+    vechicle.mileAge = this.userForm.value['mileAge'];
+    vechicle.priceNegotiable = this.userForm.value['priceNegotiable'];
+    vechicle.price = this.userForm.value['price'];
     vechicle.contactName = this.userForm.value['contactName'];
     vechicle.contactPlace = this.userForm.value['contactPlace'];
     vechicle.contactPhone = this.userForm.value['contactPhone'];
+    vechicle.description = this.userForm.value['description'];
     vechicle.imgUrl = this.userForm.value['imgUrl'];
 
-
-    this.vechicleService.addVechicleForSale(vechicle);
+    let result = this.vechicleService.addVechicleForSale(vechicle);
+    console.log('Vechiclse add for sale ', result);
+    // console.log(result['ZoneAwarePromise']['__zone_symbol__state']);
   }
 
   public checkUnsaved() {
@@ -98,6 +105,6 @@ export class AddVechicleComponent implements OnInit {
   }
 
   public editVechicle(vechicleId) {
-   console.log('Inside Edit Vechcle',vechicleId);    
+    console.log('Inside Edit Vechcle', vechicleId);
   }
 }

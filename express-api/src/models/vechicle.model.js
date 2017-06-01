@@ -3,7 +3,6 @@ import mongoose from 'mongoose';
 let Schema = mongoose.Schema;
 
 let vechicle = new Schema({
-    _id:String,
     brand: String,
     vechicleModel: String,
     transmission: String,
@@ -17,6 +16,7 @@ let vechicle = new Schema({
     contactName: String,
     contactPlace: String,
     contactPhone: String,
+    description: String,
     imgUrl: String
 });
 

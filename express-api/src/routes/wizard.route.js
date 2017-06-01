@@ -13,9 +13,9 @@ router.get('/', (req, res) => {
         if (err)
             res.send(err);
 
-        // res.json(wizards);
+        res.json(wizards);
 
-        res.json({ 'data': wizards, 'decoded': req.decoded._doc });
+        // res.json({ 'data': wizards, 'decoded': req.decoded._doc });
 
     });
 

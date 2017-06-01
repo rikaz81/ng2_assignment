@@ -4,7 +4,7 @@ import { FormGroup, FormBuilder, Validators, FormControl, FormArray } from '@ang
 import { VechicleService } from "app/shared/services/vechicle.service";
 import { DUMMY_VECHICLE_LIST } from "app/shared/config/service.constants";
 import { Observable } from 'rxjs/Observable';
-import {Router} from '@angular/router'
+import { Router } from '@angular/router'
 
 
 @Component({
@@ -21,7 +21,7 @@ export class SearchVechicleComponent implements OnInit {
   vechicles2: Observable<any>;
 
   currentDate = new Date();
-  constructor(private formBuilder: FormBuilder, private vechicleService: VechicleService,private router: Router) {
+  constructor(private formBuilder: FormBuilder, private vechicleService: VechicleService, private router: Router) {
     this.transmissions = TRANSMISSION;
     this.brands = VECHICLE_BRANDS;
     this.conditions = VECHICLE_CONDITIONS;
@@ -71,11 +71,13 @@ export class SearchVechicleComponent implements OnInit {
     console.log('deleteVechicleFromSale ', vechicleId)
 
     this.vechicleService.deleteVechicleFromSale(vechicleId);
+    this.router.navigate(['/', 'vechicle', 'search-vechicle']);
+
   }
 
   editVechicleFromSale(vechicleId) {
     // localhost:3000/wizard/59106c40a3acac27dc01390c
     console.log('Edit Vechicle Detected ', vechicleId)
-    this.router.navigate(['/','vechicle','edit-vechicle']);
+    this.router.navigate(['/', 'vechicle', 'edit-vechicle']);
   }
 }

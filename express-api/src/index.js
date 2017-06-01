@@ -18,6 +18,7 @@ app.use(bodyParser.json());
 
 app.set('port', 3000);
 
+mongoose.Promise = global.Promise;
 //connect to mongoDB instance created on mongoLabs
 mongoose.connect('mongodb://root:root@ds133231.mlab.com:33231/hogwarts');
 
@@ -32,22 +33,41 @@ app.get('/', (req, res) => {
 
 
 //middleware ex: implementation of authentication
-app.use('/wizard', (req, res, next) => {
-    console.log("something happened");
-    let token = req.headers['x-access-token'];
-    if (!token) {
-        res.status(401).json({ message: "Not Authorized" });
-    } else {
-        jwt.verify(token, CONFIG.secretKey, (err, decoded) => {
-            if (err) {
-                res.status(401).json({ message: "Invalid Token" });
-            } else {
-                req.decoded = decoded;
-                next();
-            }
-        });
-    }
-});
+// app.use('/wizard', (req, res, next) => {
+//     console.log("something happened");
+//     let token = req.headers['x-access-token'];
+//     if (!token) {
+//         res.status(401).json({ message: "Not Authorized" });
+//     } else {
+//         jwt.verify(token, CONFIG.secretKey, (err, decoded) => {
+//             if (err) {
+//                 res.status(401).json({ message: "Invalid Token" });
+//             } else {
+//                 req.decoded = decoded;
+//                 next();
+//             }
+//         });
+//     }
+// });
+
+//skipauthentication temp
+// app.use('/wizard', (req, res) => {
+//     console.log("something happened");
+//     let token = req.headers['x-access-token'];
+//     // next();
+//     // if (!token) {
+//     //     res.status(401).json({ message: "Not Authorized" });
+//     // } else {
+//     //     jwt.verify(token, CONFIG.secretKey, (err, decoded) => {
+//     //         if (err) {
+//     //             res.status(401).json({ message: "Invalid Token" });
+//     //         } else {
+//     //             req.decoded = decoded;
+//     //             next();
+//     //         }
+//     //     });
+//     // }
+// });
 
 
 app.use('/vechicle', function (req, res, next) {
