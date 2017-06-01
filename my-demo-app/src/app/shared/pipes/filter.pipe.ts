@@ -6,28 +6,28 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class FilterPipe implements PipeTransform {
 
     filteredItems: any = [];
-    transform(items: any[], filter: string): any {
-        console.log('inside text filter');
-        console.log('Items', items);
-        console.log('Filters', filter);
+    transform(items: any[], filter: string, brandFilter: string, conditionFilter: string): any {
 
-        if (!items || !filter) {
+
+        if (!items || (!filter && !brandFilter && !conditionFilter)) {
             return items;
         }
-        // To search values only of "name" variable of your object(item)
-
-
-
-        // items = items.filter(item => item.title.toLowerCase().indexOf(filter.toLowerCase()) !== -1);
-
-        items = items.filter(item => item.brand.toLowerCase().indexOf(filter.toLowerCase()) !== -1);
-        console.log(items.length);
-
-        if (items.length > 0)
+        if (filter) {
+            console.log('Apply 1st filter');
             items = items.filter(item => item.vechicleModel.toLowerCase().indexOf(filter.toLowerCase()) !== -1);
+            console.log(items.length);
+        }
 
-        console.log(items.length);
+        if (items.length > 0 && brandFilter) {
+            console.log('Apply 2nd filter');
+            items = items.filter(item => item.brand.toLowerCase().indexOf(brandFilter.toLowerCase()) !== -1);
+        }
 
+
+        if (items.length > 0 && conditionFilter) {
+            console.log('Apply 3rd filter');
+            items = items.filter(item => item.condition.toLowerCase().indexOf(conditionFilter.toLowerCase()) !== -1);
+        }
         return items;
 
         // To search in values of every variable of your object(item)
