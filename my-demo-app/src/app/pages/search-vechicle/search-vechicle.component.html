@@ -1,122 +1,115 @@
-<nav class="navbar navbar-default">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+<section id="container" class="hr-menu">
+
+  <!--header start-->
+  <nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
         <span class="sr-only">Toggle navigation</span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="#">Find a perfect Vechicles</a>
+        <a class="navbar-brand" href="#">Find a perfect Vechicles</a>
 
-    </div>
+      </div>
 
 
-    <!--<form class="navbar-form navbar-left" role="search" [formGroup]="userForm" (ngSubmit)="handleForSubmit(userForm)">-->
+      <!--<form class="navbar-form navbar-left" role="search" [formGroup]="userForm" (ngSubmit)="handleForSubmit(userForm)">-->
 
-    <div class="navbar-form navbar-left">
-      <select class="form-control" id="brand" [(ngModel)]="brand" placeholder="Vechicle Brand" id="brand">   
+      <div class="navbar-form navbar-left">
+        <select class="form-control" id="brand" [(ngModel)]="brand" placeholder="Vechicle Brand" id="brand">   
             <option value="" selected>--All Brands--</option>                   
             <option *ngFor="let brand of brands"  value="{{brand.value}}">{{brand.text}}</option>   
                 
         </select>
-      <span class="icon-bar"></span>
-      <select class="form-control" id="condition" [(ngModel)]="condition" placeholder="Condition" name="condition">    
+        <span class="icon-bar"></span>
+        <select class="form-control" id="condition" [(ngModel)]="condition" placeholder="Condition" name="condition">    
                 <option value="" selected >--All Conditions--</option>
                 
                    <option *ngFor="let condition of conditions"  value="{{condition.value}}">{{condition.text}}</option>  
              
         </select>
-      <span class="icon-bar"></span>
-      <select class="form-control" id="transmission" name="transmission" placeholder="Transmission" name="transmission">    
+        <span class="icon-bar"></span>
+        <select class="form-control" id="transmission" name="transmission" placeholder="Transmission" name="transmission">    
               <option value="A" >--All Transmission--</option>
                <option *ngFor="let trs of transmissions"  value={{trs.value}}>{{trs.label}}</option>             
         </select>
-      <input type="text" class="form-control" [(ngModel)]="searchTerm" placeholder="Search Key word">
+        <input type="text" class="form-control" [(ngModel)]="searchTerm" placeholder="Search Key word">
+      </div>
+      <button type="submit" class="btn btn-default">Search</button>
+      <!--</form>-->
+
     </div>
-    <button type="submit" class="btn btn-default">Search</button>
-    <!--</form>-->
+  </nav>
+  <!--header end-->
 
-  </div>
-</nav>
-
-
-<div class="container-fluid">
+  <!--main content start-->
+  <section id="main-content">
+    <section class="wrapper">
 
 
-  <!--*ngIf="(posts | filter:searchTerm).length == 0"-->
-  <div class="alert alert-dismissible alert-warning" *ngIf="(vechicles | filter:searchTerm:brand:condition).length == 0">
-
-    <!--<div ng-show="!posts.length" class="alert alert-dismissible alert-warning">-->
-    <button type="button" class="close" data-dismiss="alert">&times;</button>
-    <p>Sorry!, we are unable to find searched text <span class="alert-link">{{searchTerm}}</span> Please refine your search
-      and try again.</p>
-  </div>
-
-  <div class="alert alert-dismissible alert-success" *ngIf="(vechicles | filter:searchTerm:brand:condition).length !== 0">
+      <div class="row">
+        <!--sidebar start-->
+        <div class="col-md-2 hidden-sm">
+          <app-left-side-banner></app-left-side-banner>
 
 
-    <button type="button" class="close" data-dismiss="alert">&times;</button>
-    <p>Found Vechicles <span class="alert-link">{{(vechicles | filter:searchTerm:brand:condition).length}}</span>. available
-      for sale.</p>
-  </div>
+        </div>
+        <!--sidebar end-->
 
-  <!--Start Testing -->
-  <!--<div class="ui-item">
-    <div class="item-thumb has-frames">
-      <a href="/en/ad/suzuki-singray-x-2015-for-sale-ratnapura"><img alt="Suzuki Singray X 2015" src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" srcset="//i.ikman-st.com/c515eb93-be9b-4c2f-9018-e5b63dd14418/136/102/cropped.webp 1x, //i.ikman-st.com/c515eb93-be9b-4c2f-9018-e5b63dd14418/272/204/cropped.webp 1.3x"></a>
-    </div>
-    <div class="item-content"><a href="/en/ad/suzuki-singray-x-2015-for-sale-ratnapura" class="item-title h4">Suzuki Singray X 2015</a>
-      <p class="item-meta"><span>600 km</span></p>
-      <p class="item-location"><span class="ui-bubble is-member">MEMBER</span><span>a minute ago</span><span>, </span><span class="item-area">Ratnapura</span><span>, </span>
-        <span
-          class="item-cat">Cars</span>
-      </p>
-      <p class="item-info"><strong>Rs 3,375,000</strong></p>
-    </div>
-    <div class="item-extras"></div>
-  </div>-->
-
-
-  <!--
-   id: '1001',
-    brand: 'Toyota',
-    vechicleModel: 'Axio Hybrid',
-    transmission: 'Auto',
-    vtype: 'Car',
-    condition: 'Used',
-    modelYear: '2014',
-    mileAge: '17890 km',
-    price: '4.3 millions',
-    priceNegotiable: 'Y',
-    fuelType: 'demo-text',
-    fuelTypes: ['H', 'P'],
-    contact: [{ name: 'Dr.Peter James', place: 'colombo-09', phone: '077-xxx-ccc-gfs' }],
-    imgUrl: 'http://www.copyright-free-photos.org.uk/cars/mini-cooper.jpg'-->
+        <!-- page start-->
+        <div class="col-sm-12 col-md-10">
+          <!--breadcrumbs start -->
+          <div class="container-fluid">
 
 
 
-  <!-- Testing -->
+            <div class="alert alert-dismissible alert-warning" *ngIf="(vechicles | filter:searchTerm:brand:condition).length == 0">
 
-
-  <div class="row">
-
-
-
-    <div class="col-md-8" *ngFor="let vechicle  of vechicles  | filter:searchTerm:brand:condition ">
-      <div class="panel panel-default">
-        <div class="panel-body">
-          <div class="row">
-            <div class="col-md-4">
-              <img src="{{vechicle.imgUrl}}" class="img-responsive">
+              <button type="button" class="close" data-dismiss="alert">&times;</button>
+              <p>Sorry!, we are unable to find searched text <span class="alert-link">{{searchTerm}}</span> Please refine your
+                search and try again.</p>
             </div>
-            <div class="col-md-8">
-              {{vechicle.id}}
-              <h5>{{vechicle.brand}} - {{vechicle.vechicleModel}} {{vechicle.modelYear}} {{vechicle.id}}</h5>
-              <div style="font-size: 14px;">{{vechicle.mileAge}} [{{vechicle.condition}}]</div>
-              <div style="font-size: 14px;">{{vechicle.modelYear}}</div>
-              <div style="font-size: 14px;">{{vechicle.description}}</div>
-              <!--<div style="font-size: 14px;">Price - {{vechicle.price}}
+
+            <div class="alert alert-dismissible alert-success" *ngIf="(vechicles | filter:searchTerm:brand:condition).length !== 0">
+
+
+              <button type="button" class="close" data-dismiss="alert">&times;</button>
+              <p>Found Vechicles <span class="alert-link">{{(vechicles | filter:searchTerm:brand:condition).length}}</span>.
+                available for sale.</p>
+            </div>
+
+
+
+
+
+            <div class="row">
+
+
+
+              <div class="col-md-12" *ngFor="let vechicle  of vechicles  | filter:searchTerm:brand:condition ">
+                <div class="panel panel-default">
+                  <div class="panel-body">
+                    <div class="row">
+                      <div class="col-md-4">
+                        <img src="{{vechicle.imgUrl}}" class="img-responsive">
+                      </div>
+                      <div class="col-md-8">
+                        {{vechicle.id}}
+                        <h5>{{vechicle.brand}} - {{vechicle.vechicleModel}} {{vechicle.modelYear}} {{vechicle.id}}</h5>
+                        <div style="font-size: 14px;">{{vechicle.mileAge}} [{{vechicle.condition}}]</div>
+                        <div style="font-size: 14px;">{{vechicle.modelYear}}</div>
+
+
+                        <!--<button type="button" class="btn btn-info" data-toggle="collapse" data-target="#demo">Simple collapsible</button>-->
+                        <div> More Info <span class="badge" data-toggle="collapse" data-target="#demo">>>></span></div>
+                        <div id="demo" class="collapse" style="font-size: 14px;">{{vechicle.description}}</div>
+                        <!--<div style="font-size: 14px;">{{vechicle.description}}</div>-->
+
+                        <!--<a href="javascript:void(0);" (onclick)="hideme[vechicle.id] = !hideme[vechicle.id]">Click</a>
+                        <div [hidden]="hideme[vechicle.id]">Hide</div>-->
+                        <!--<div style="font-size: 14px;">Price - {{vechicle.price}}
                 <label *ngIf="vechicle.priceNegotiable === 'Y'">
                   Price Negotiable
                 </label>
@@ -124,32 +117,39 @@
               <div style="font-size: 14px;">Published : {{currentDate|date:"dd MMM yyyy HH:mm a"}}</div>
 
               <div class="glyphicon glyphicon-phone-alt"> {{vechicle.contact.name}}, {{vechicle.contact.place}} , {{vechicle.contact.phone}}</div>-->
-              <div>
-                <!--<button class="btn btn-primary btn-xs">
+                        <div>
+                          <!--<button class="btn btn-primary btn-xs">
                                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                 Edit</button>-->
 
-                <button class="btn btn-danger btn-xs glyphicon glyphicon-remove-circle" (click)="deleteVechicleFromSale(vechicle.id)">
+                          <button class="btn btn-danger btn-xs glyphicon glyphicon-remove-circle" (click)="deleteVechicleFromSale(vechicle.id)">
                                 <i class="fa fa-envelope-o" aria-hidden="true"></i>
                                 Delete</button>
 
-                <button class="btn btn-success btn-xs glyphicon glyphicon-remove-circle" (click)="editVechicleFromSale(vechicle.id)">
+                          <button class="btn btn-success btn-xs glyphicon glyphicon-remove-circle" (click)="editVechicleFromSale(vechicle.id)">
                                 <i class="fa fa-envelope-o" aria-hidden="true"></i>
                                 Edit</button>
 
 
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
+
+
+
             </div>
+
           </div>
         </div>
+        <!-- page end-->
       </div>
-    </div>
 
-    <div class="col-md-4">
-      advertisment
-      <p>blas jsakdjasda</p>
-    </div>
+    </section>
+  </section>
+  <!--main content end-->
+  <!--footer start-->
 
-  </div>
-
-</div>
+</section>

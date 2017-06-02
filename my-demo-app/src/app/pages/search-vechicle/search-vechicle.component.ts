@@ -19,8 +19,9 @@ export class SearchVechicleComponent implements OnInit {
   userForm: FormGroup;
   vechicles: Array<any> = [];
   vechicles2: Observable<any>;
-
+  // hideme: <any>=[];
   currentDate = new Date();
+
   constructor(private formBuilder: FormBuilder, private vechicleService: VechicleService, private router: Router) {
     this.transmissions = TRANSMISSION;
     this.brands = VECHICLE_BRANDS;

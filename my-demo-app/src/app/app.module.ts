@@ -22,6 +22,7 @@ import { AddVechicleComponent } from './pages/add-vechicle/add-vechicle.componen
 import { SearchVechicleComponent } from './pages/search-vechicle/search-vechicle.component';
 import { VechicleService } from "app/shared/services/vechicle.service";
 import { EditVechicleComponent } from './pages/edit-vechicle/edit-vechicle.component';
+import { LeftSideBannerComponent } from './left-side-banner/left-side-banner.component';
 
 
 @NgModule({
@@ -37,7 +38,8 @@ import { EditVechicleComponent } from './pages/edit-vechicle/edit-vechicle.compo
     FilterPipe,
     AddVechicleComponent,
     SearchVechicleComponent,
-    EditVechicleComponent
+    EditVechicleComponent,
+    LeftSideBannerComponent
   ],
   imports: [
     BrowserModule,
