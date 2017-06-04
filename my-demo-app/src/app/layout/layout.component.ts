@@ -23,7 +23,7 @@ export class LayoutComponent implements OnInit {
   logout() {
 
     this.userService.logout();
-    this.router.navigate(['/', 'login']);
+    this.router.navigate(['/', 'guest-page']);
   }
 
   search() {
