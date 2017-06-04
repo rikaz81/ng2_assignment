@@ -87,6 +87,7 @@ export class SearchVechicleComponent implements OnInit {
   editVechicleFromSale(vechicleId) {
     // localhost:3000/wizard/59106c40a3acac27dc01390c
     console.log('Edit Vechicle Detected ', vechicleId)
+    this.vechicleService.setEditableVechicleReference(vechicleId);
     this.router.navigate(['/', 'vechicle', 'edit-vechicle']);
   }
 }

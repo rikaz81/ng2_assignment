@@ -103,7 +103,7 @@ export class AddVechicleComponent implements OnInit {
     this.error = false;
     this.vechicleService.addVechicleForSale(vechicle).subscribe((data) => {
       console.log(data);
-      this.message = "Vechicle Added Successfuly for the sale!!!"
+      this.message = "Vechicle Added Successfuly to the sale!!!"
     }, (err) => {
       this.error = true;
     });

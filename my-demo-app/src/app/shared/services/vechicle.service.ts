@@ -29,6 +29,8 @@ export interface VechicleTO {
 @Injectable()
 export class VechicleService {
 
+  public vechicleId: string;
+
   constructor(private http: Http) { }
 
   addVechicleForSale(vechicle: VechicleTO) {
@@ -119,6 +121,41 @@ export class VechicleService {
       .then(this.extractData)
       .catch(this.handleErrorPromise);
 
+
+  }
+
+  setEditableVechicleReference(vechicleIdRef: string) {
+    this.vechicleId = vechicleIdRef;
+  }
+
+  clearEditableVechicleReference() {
+    this.vechicleId = null;
+  }
+
+  getEditableVechicleReference() {
+    return this.vechicleId;
+  }
+
+  getVechicleById(itemId: string) {
+    return this.http.get(URL_CONST.BACK_END_HOST + 'vechicle/' + itemId, { headers: this.getHeader() }).map((response) => {
+      console.log(response.json());
+      return response.json();
+   
+    }).catch((data) => {
+      console.log("ERROR @ getVechicleById Service", data);
+      return Observable.throw(data);
+    });
+  }
+
+    editVechicleForSale(vechicle: VechicleTO) {
+    console.log("Inside Add Vechicle Services", vechicle);
+
+    // return this.http.post(URL_CONST.BACK_END_HOST + 'vechicle', vechicle, { headers: this.getHeader() }).toPromise()
+    //   .then(this.extractData)
+    //   .catch(this.handleErrorPromise);
+
+    return this.http.put(URL_CONST.BACK_END_HOST + 'vechicle/'+vechicle.id, vechicle, this.getRequestOptions())
+      .map((response: Response) => response.json());
 
   }
 }

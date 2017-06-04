@@ -40,7 +40,7 @@ router.post('/', (req, res) => {
     vechicle.contactPhone = req.body.contactPhone;
     vechicle.description = req.body.description;
     vechicle.imgUrl = req.body.imgUrl;
-    
+
     // vechicle.imgUrl = 'http://www.copyright-free-photos.org.uk/cars/mini-cooper.jpg';
 
     vechicle.save((err, data) => {
@@ -115,7 +115,7 @@ router.put('/:id', (req, res) => {
         vechicle.modelYear = req.body.modelYear;
         vechicle.mileAge = req.body.mileAge;
         vechicle.price = req.body.price;
-        // vechicle.priceNegotiable = req.body.priceNegotiable;
+        vechicle.priceNegotiable = req.body.priceNegotiable;
         vechicle.contactName = req.body.contactName;
         vechicle.contactPlace = req.body.contactPlace;
         vechicle.contactPhone = req.body.contactPhone;

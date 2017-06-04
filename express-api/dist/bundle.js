@@ -488,7 +488,7 @@ router.put('/:id', function (req, res) {
         vechicle.modelYear = req.body.modelYear;
         vechicle.mileAge = req.body.mileAge;
         vechicle.price = req.body.price;
-        // vechicle.priceNegotiable = req.body.priceNegotiable;
+        vechicle.priceNegotiable = req.body.priceNegotiable;
         vechicle.contactName = req.body.contactName;
         vechicle.contactPlace = req.body.contactPlace;
         vechicle.contactPhone = req.body.contactPhone;
