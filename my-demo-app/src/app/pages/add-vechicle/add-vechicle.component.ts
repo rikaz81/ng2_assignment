@@ -36,6 +36,9 @@ export class AddVechicleComponent implements OnInit {
   isUnsaved: boolean = false;
   userForm: FormGroup;
   // fuelTypesArray:Array<any>= [];
+  error: boolean = false;
+  message: string = '';
+
 
   constructor(private formBuilder: FormBuilder, private vechicleService: VechicleService) {
 
@@ -95,8 +98,16 @@ export class AddVechicleComponent implements OnInit {
     vechicle.description = this.userForm.value['description'];
     vechicle.imgUrl = this.userForm.value['imgUrl'];
 
-    let result = this.vechicleService.addVechicleForSale(vechicle);
-    console.log('Vechiclse add for sale ', result);
+    // let result = this.vechicleService.addVechicleForSale(vechicle);
+    // console.log('Vechiclse add for sale ', result);
+    this.error = false;
+    this.vechicleService.addVechicleForSale(vechicle).subscribe((data) => {
+      console.log(data);
+      this.message = "Vechicle Added Successfuly for the sale!!!"
+    }, (err) => {
+      this.error = true;
+    });
+
     // console.log(result['ZoneAwarePromise']['__zone_symbol__state']);
   }
 

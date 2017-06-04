@@ -196,6 +196,22 @@ app.use('/vechicle', function (req, res, next) {
     next();
 });
 
+app.use('/user', function (req, res, next) {
+    console.log("access user route");
+    // Website you wish to allow to connect
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    // Request methods you wish to allow
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+    // Request headers you wish to allow
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+    // Set to true if you need the website to include cookies in the requests sent
+    // to the API (e.g. in case you use sessions)
+    res.setHeader('Access-Control-Allow-Credentials', true);
+
+    // Pass to next layer of middleware
+    next();
+});
+
 app.get('/', function (req, res) {
     // res.send('Hello World !!!');
 
@@ -320,22 +336,26 @@ var Wizard = __WEBPACK_IMPORTED_MODULE_0_mongoose___default.a.model('Wizard', wi
 var router = __WEBPACK_IMPORTED_MODULE_0_express___default.a.Router();
 
 // //get all wizards
-router.get('/authenticate', function (req, res) {
+router.post('/authenticate', function (req, res) {
 
-    __WEBPACK_IMPORTED_MODULE_1__models_user_model___["a" /* User */].findOne({ name: req.query.name }, function (err, user) {
+    console.log("Inside authenyication", req.body);
+    // ${req.params.id}
+
+    __WEBPACK_IMPORTED_MODULE_1__models_user_model___["a" /* User */].findOne({ name: req.body.name }, function (err, user) {
         if (err) res.send(err);
 
         if (!user) {
             res.status(401).json({ message: "User doesn't Exist" });
         } else {
-            if (user.password === req.query.password) {
+            // req.query.password
+            if (user.password === req.body.password) {
                 var token = __WEBPACK_IMPORTED_MODULE_2_jsonwebtoken___default.a.sign(user, __WEBPACK_IMPORTED_MODULE_3__config__["a" /* CONFIG */].secretKey, {
                     expiresIn: 1440 //expire in 24hrs
                 });
-
-                res.json({ message: "Succesfully logged In.....", token: token });
+                // console.log(token);
+                res.json({ message: "Succesfully logged In.....", status: true, token: token, id: user.name });
             } else {
-                res.status(401).json({ message: "Invalid Password" });
+                res.status(401).json({ message: "Invalid Password", status: false });
             }
         }
     });

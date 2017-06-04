@@ -4,6 +4,13 @@
       <fieldset>
         <legend>Add Vechicle to Sale</legend>
 
+
+        <div *ngIf="error" class="alert alert-dismissible alert-danger">
+          <strong>{{message}}</strong>
+        </div>
+        <div *ngIf="!error && message.length!=0" class="alert alert-dismissible alert-success">
+          <strong> {{message}}</strong>
+        </div>
         <div class="form-group">
           <label for="select" class="col-lg-2 control-label">Brand</label>
           <div class="col-lg-4">

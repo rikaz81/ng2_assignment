@@ -7,24 +7,27 @@ import { CONFIG } from '../config';
 let router = express.Router();
 
 // //get all wizards
-router.get('/authenticate', (req, res) => {
+router.post('/authenticate', (req, res) => {
 
+    console.log("Inside authenyication", req.body);
+    // ${req.params.id}
 
-    User.findOne({ name: req.query.name }, (err, user) => {
+    User.findOne({ name: req.body.name }, (err, user) => {
         if (err)
             res.send(err);
 
         if (!user) {
             res.status(401).json({ message: "User doesn't Exist" });
         } else {
-            if (user.password === req.query.password) {
+            // req.query.password
+            if (user.password === req.body.password) {
                 let token = jwt.sign(user, CONFIG.secretKey, {
                     expiresIn: 1440 //expire in 24hrs
                 });
-
-                res.json({ message: "Succesfully logged In.....", token: token });
+                // console.log(token);
+                res.json({ message: "Succesfully logged In.....", status: true, token: token, id: user.name });
             } else {
-                res.status(401).json({ message: "Invalid Password" });
+                res.status(401).json({ message: "Invalid Password", status: false });
             }
         }
 

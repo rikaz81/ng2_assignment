@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { TRANSMISSION, VECHICLE_BRANDS, VECHICLE_CONDITIONS } from "app/shared/config/common.constants";
 import { FormGroup, FormBuilder, Validators, FormControl, FormArray } from '@angular/forms';
 import { VechicleService } from "app/shared/services/vechicle.service";
+import { UserService } from "app/shared/services/user.service";
 import { DUMMY_VECHICLE_LIST } from "app/shared/config/service.constants";
 import { Observable } from 'rxjs/Observable';
 import { Router } from '@angular/router'
@@ -21,12 +22,15 @@ export class SearchVechicleComponent implements OnInit {
   vechicles2: Observable<any>;
   // hideme: <any>=[];
   currentDate = new Date();
+  adminUser: boolean = false;
 
-  constructor(private formBuilder: FormBuilder, private vechicleService: VechicleService, private router: Router) {
+  constructor(private formBuilder: FormBuilder, private vechicleService: VechicleService, private router: Router, private userService: UserService) {
     this.transmissions = TRANSMISSION;
     this.brands = VECHICLE_BRANDS;
     this.conditions = VECHICLE_CONDITIONS;
+    this.adminUser = this.userService.isAuthorized();
 
+    console.log('this.userService.isAuthorized()', this.userService.isAuthorized());
     this.loadVechicle();
     // this.vechicleService.getPost().subscribe((data) => this.vechicles = data, (err) => { console.log('Error Handled at componenet', err); });
 
@@ -56,9 +60,11 @@ export class SearchVechicleComponent implements OnInit {
   }
 
   ngOnInit() {
+
   }
 
   loadVechicle() {
+    this.adminUser = this.userService.isAuthorized();
     this.vechicleService.getPost().subscribe((data) => this.vechicles = data, (err) => { console.log('Error Handled at componenet', err); });
   }
   handleForSubmit(form) {
@@ -71,9 +77,11 @@ export class SearchVechicleComponent implements OnInit {
     // localhost:3000/wizard/59106c40a3acac27dc01390c
     console.log('deleteVechicleFromSale ', vechicleId)
 
-    this.vechicleService.deleteVechicleFromSale(vechicleId);
-    this.router.navigate(['/', 'vechicle', 'search-vechicle']);
+    if (confirm('Do you want to remove this vechicle from site?')) {
+      this.vechicleService.deleteVechicleFromSale(vechicleId);
 
+      this.loadVechicle();
+    }
   }
 
   editVechicleFromSale(vechicleId) {

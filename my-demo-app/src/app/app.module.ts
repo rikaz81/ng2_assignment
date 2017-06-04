@@ -23,6 +23,7 @@ import { SearchVechicleComponent } from './pages/search-vechicle/search-vechicle
 import { VechicleService } from "app/shared/services/vechicle.service";
 import { EditVechicleComponent } from './pages/edit-vechicle/edit-vechicle.component';
 import { LeftSideBannerComponent } from './left-side-banner/left-side-banner.component';
+import { UserService } from "app/shared/services/user.service";
 
 
 @NgModule({
@@ -49,7 +50,7 @@ import { LeftSideBannerComponent } from './left-side-banner/left-side-banner.com
     ReactiveFormsModule
 
   ],
-  providers: [LoginGuard, UnsavedGuard, TodoService, PostService, VechicleService],
+  providers: [LoginGuard, UnsavedGuard, TodoService, PostService, VechicleService, UserService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -15,7 +15,6 @@
       </div>
 
 
-      <!--<form class="navbar-form navbar-left" role="search" [formGroup]="userForm" (ngSubmit)="handleForSubmit(userForm)">-->
 
       <div class="navbar-form navbar-left">
         <select class="form-control" id="brand" [(ngModel)]="brand" placeholder="Vechicle Brand" id="brand">   
@@ -35,11 +34,14 @@
               <option value="A" >--All Transmission--</option>
                <option *ngFor="let trs of transmissions"  value={{trs.value}}>{{trs.label}}</option>             
         </select>
-        <input type="text" class="form-control" [(ngModel)]="searchTerm" placeholder="Search Key word">
-      </div>
-      <button type="submit" class="btn btn-default">Search</button>
-      <!--</form>-->
+        <input type="text" class="form-control" [(ngModel)]="searchTerm" placeholder="Search Vechicle Model">
+        <button type="submit" class="btn btn-default">Search</button> </div>
 
+
+      <!--</form>-->
+      <ul class="nav navbar-nav navbar-right" *ngIf="!adminUser">
+        <li><a [routerLink]="['/','login']">Admin <label class="glyphicon glyphicon-user"></label> </a></li>
+      </ul>
     </div>
   </nav>
   <!--header end-->
@@ -88,7 +90,7 @@
 
 
 
-              <div class="col-md-12" *ngFor="let vechicle  of vechicles  | filter:searchTerm:brand:condition ">
+              <div class="col-md-12" *ngFor="let vechicle  of vechicles  | filter:searchTerm:brand:condition">
                 <div class="panel panel-default">
                   <div class="panel-body">
                     <div class="row">
@@ -96,14 +98,20 @@
                         <img src="{{vechicle.imgUrl}}" class="img-responsive">
                       </div>
                       <div class="col-md-8">
-                        {{vechicle.id}}
-                        <h5>{{vechicle.brand}} - {{vechicle.vechicleModel}} {{vechicle.modelYear}} {{vechicle.id}}</h5>
+
+                        <h4>{{vechicle.brand}} - {{vechicle.vechicleModel}} {{vechicle.modelYear}}</h4>
                         <div style="font-size: 14px;">{{vechicle.mileAge}} [{{vechicle.condition}}]</div>
                         <div style="font-size: 14px;">{{vechicle.modelYear}}</div>
 
 
-                        <!--<button type="button" class="btn btn-info" data-toggle="collapse" data-target="#demo">Simple collapsible</button>-->
-                        <div> More Info <span class="badge" data-toggle="collapse" data-target="#demo">>>></span></div>
+                        <div style="font-size: 14px;">Price - LKR.{{vechicle.price}}
+                          <label *ngIf="vechicle.priceNegotiable">Price Negotiable</label>
+                        </div>
+
+                        <div class="glyphicon glyphicon-user"> {{vechicle.contactName}},{{vechicle.contactPlace}}
+                          <label class="glyphicon glyphicon-phone-alt"> {{vechicle.contactPhone}}</label>
+                        </div>
+                        <div data-toggle="collapse" data-target="#demo"> More Info <span class="badge">>>></span></div>
                         <div id="demo" class="collapse" style="font-size: 14px;">{{vechicle.description}}</div>
                         <!--<div style="font-size: 14px;">{{vechicle.description}}</div>-->
 
@@ -117,7 +125,7 @@
               <div style="font-size: 14px;">Published : {{currentDate|date:"dd MMM yyyy HH:mm a"}}</div>
 
               <div class="glyphicon glyphicon-phone-alt"> {{vechicle.contact.name}}, {{vechicle.contact.place}} , {{vechicle.contact.phone}}</div>-->
-                        <div>
+                        <div *ngIf="adminUser">
                           <!--<button class="btn btn-primary btn-xs">
                                                 <i class="fa fa-plus" aria-hidden="true"></i>
                                 Edit</button>-->
@@ -129,6 +137,7 @@
                           <button class="btn btn-success btn-xs glyphicon glyphicon-remove-circle" (click)="editVechicleFromSale(vechicle.id)">
                                 <i class="fa fa-envelope-o" aria-hidden="true"></i>
                                 Edit</button>
+
 
 
                         </div>

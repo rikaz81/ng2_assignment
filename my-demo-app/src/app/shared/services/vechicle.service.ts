@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http, Headers, Response } from '@angular/http';
+import { Http, Headers, Response, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/Rx';
 import { URL_CONST } from "app/shared/config/common.constants";
@@ -34,10 +34,13 @@ export class VechicleService {
   addVechicleForSale(vechicle: VechicleTO) {
     console.log("Inside Add Vechicle Services", vechicle);
 
+    // return this.http.post(URL_CONST.BACK_END_HOST + 'vechicle', vechicle, { headers: this.getHeader() }).toPromise()
+    //   .then(this.extractData)
+    //   .catch(this.handleErrorPromise);
 
-    return this.http.post(URL_CONST.BACK_END_HOST + 'vechicle', vechicle, { headers: this.getHeader() }).toPromise()
-      .then(this.extractData)
-      .catch(this.handleErrorPromise);
+    return this.http.post(URL_CONST.BACK_END_HOST + 'vechicle', vechicle, this.getRequestOptions())
+      .map((response: Response) => response.json());
+
   }
   searchForVechicle() {
     console.log("Inside Search Vechicle Services");
@@ -81,7 +84,9 @@ export class VechicleService {
     });
   }
 
-
+  getRequestOptions() {
+    return new RequestOptions({ headers: this.getHeader() });
+  }
   getHeader() {
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');

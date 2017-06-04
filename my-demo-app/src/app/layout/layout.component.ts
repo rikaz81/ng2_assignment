@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { UserService } from "app/shared/services/user.service";
 
 @Component({
   selector: 'app-layout',
@@ -8,27 +9,25 @@ import { Router } from '@angular/router';
 })
 export class LayoutComponent implements OnInit {
 
-searchText: string = "";
-  constructor(private router: Router) { }
+  searchText: string = "";
+  adminUser: boolean = false;
+  constructor(private router: Router, private userService: UserService) {
+    this.adminUser = this.userService.isAuthorized();
+  }
 
   ngOnInit() {
   }
 
-  // searchStr: string;
 
-
-  // searchClick(): void {
-  //   alert('Search button clicked ');
-  //   console.log(this.searchStr);
-  // }
 
   logout() {
-    sessionStorage.setItem('loginFLag', 'false');
+
+    this.userService.logout();
     this.router.navigate(['/', 'login']);
   }
 
-  search(){
-    console.log('Search clicked ',this.searchText);
+  search() {
+    console.log('Search clicked ', this.searchText);
   }
 
 }
