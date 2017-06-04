@@ -1,10 +1,6 @@
-// console.log("Hello World");
-// console.log("Hot Re-Load Enabled...456!");
-
 import express from 'express';
 import bodyParser from 'body-parser'
 import { VECHICLE_ROUTES } from './routes/vechicle.route'
-import { WIZARD_ROUTES } from './routes/wizard.route'
 import { USER_ROUTES } from './routes/user.route.'
 import mongoose from 'mongoose'
 import jwt from 'jsonwebtoken';
@@ -20,35 +16,34 @@ app.set('port', 3000);
 
 mongoose.Promise = global.Promise;
 //connect to mongoDB instance created on mongoLabs
-mongoose.connect('mongodb://root:root@ds133231.mlab.com:33231/hogwarts');
-
+mongoose.connect('mongodb://root:root@ds151141.mlab.com:51141/osakamotorsdb');
 
 //tells express where your view will be
-app.set('views', 'src/views');
-app.set('view engine', 'pug');
-//plug demo
-app.get('/', (req, res) => {
-    res.render('hello');
-});
+// app.set('views', 'src/views');
+// app.set('view engine', 'pug');
+// //plug demo
+// app.get('/', (req, res) => {
+//     res.render('hello');
+// });
 
 
 //middleware ex: implementation of authentication
-// app.use('/wizard', (req, res, next) => {
-//     console.log("something happened");
-//     let token = req.headers['x-access-token'];
-//     if (!token) {
-//         res.status(401).json({ message: "Not Authorized" });
-//     } else {
-//         jwt.verify(token, CONFIG.secretKey, (err, decoded) => {
-//             if (err) {
-//                 res.status(401).json({ message: "Invalid Token" });
-//             } else {
-//                 req.decoded = decoded;
-//                 next();
-//             }
-//         });
-//     }
-// });
+app.use('/wizard', (req, res, next) => {
+    console.log("something happened");
+    let token = req.headers['x-access-token'];
+    if (!token) {
+        res.status(401).json({ message: "Not Authorized" });
+    } else {
+        jwt.verify(token, CONFIG.secretKey, (err, decoded) => {
+            if (err) {
+                res.status(401).json({ message: "Invalid Token" });
+            } else {
+                req.decoded = decoded;
+                next();
+            }
+        });
+    }
+});
 
 //skipauthentication temp
 // app.use('/wizard', (req, res) => {
@@ -83,6 +78,21 @@ app.use('/vechicle', function (req, res, next) {
     res.setHeader('Access-Control-Allow-Credentials', true);
 
     // Pass to next layer of middleware
+
+    // let token = req.headers['x-access-token'];
+    // if (!token) {
+    //     res.status(401).json({ message: "Not Authorized" });
+    // } else {
+    //     jwt.verify(token, CONFIG.secretKey, (err, decoded) => {
+    //         if (err) {
+    //             res.status(401).json({ message: "Invalid Token" });
+    //         } else {
+    //             req.decoded = decoded;
+    //             next();
+    //         }
+    //     });
+    // }
+
     next();
 
 });
@@ -104,34 +114,24 @@ app.use('/user', function (req, res, next) {
 
 });
 
-app.get('/', (req, res) => {
-    // res.send('Hello World !!!');
+// app.get('/', (req, res) => {
+//     // res.send('Hello World !!!');
 
-    //Sending JSON Response
-    res.json({ 'message': 'Hello World' });
-});
-
-
-// app.post('/example-post', (req, res) => {
-
-//     res.json({
-//         message: 'Post Successful',
-//         payload: req.body,
-//         headers: req.headers
-//     });
+//     //Sending JSON Response
+//     res.json({ 'message': 'Hello World' });
 // });
+
 
 app.use('/vechicle', VECHICLE_ROUTES);
 
-app.use('/wizard', WIZARD_ROUTES);
+// app.use('/wizard', WIZARD_ROUTES);
 
-//localhost:3000/user/register
 app.use('/user', USER_ROUTES);
 
 //to run the server
 app.listen(app.get('port'), () => {
     //EC6 syntax
-    console.log(`Node Server is running on port EC6 : ${app.get('port')}`);
-
+    // console.log(`Node Server is running on port EC6 : ${app.get('port')}`);
     console.log('Node Server is running on port : ' + app.get('port'));
 });
+

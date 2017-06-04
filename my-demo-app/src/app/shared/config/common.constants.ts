@@ -1,8 +1,5 @@
 // URL Prefixes
 export const URL_CONST = {
-    URL_PREFIX: 'http://localhost:3334/',
-    DEV_PREFIX: 'http://dev.sc-platform.api.reactive-solutions.xyz/',
-    DEV_PREFIX_R: 'http://localhost:8000/',
     BACK_END_HOST: 'http://localhost:3000/'
 };
 

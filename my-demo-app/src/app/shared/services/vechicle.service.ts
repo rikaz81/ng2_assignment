@@ -3,6 +3,7 @@ import { Http, Headers, Response, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/Rx';
 import { URL_CONST } from "app/shared/config/common.constants";
+import { UserService } from "app/shared/services/user.service";
 
 export interface VechicleTO {
   id: string,
@@ -31,7 +32,7 @@ export class VechicleService {
 
   public vechicleId: string;
 
-  constructor(private http: Http) { }
+  constructor(private http: Http,private userService: UserService) { }
 
   addVechicleForSale(vechicle: VechicleTO) {
     console.log("Inside Add Vechicle Services", vechicle);
@@ -92,9 +93,7 @@ export class VechicleService {
   getHeader() {
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    // headers.append('Authorization','');
-    // headers.append('Access-Control-Allow-Origin',"*");
-    //  set Access-Control-Allow-Origin "*"
+    // headers.append('x-access-token', this.userService.getToken());
 
     return headers;
   }
@@ -140,21 +139,21 @@ export class VechicleService {
     return this.http.get(URL_CONST.BACK_END_HOST + 'vechicle/' + itemId, { headers: this.getHeader() }).map((response) => {
       console.log(response.json());
       return response.json();
-   
+
     }).catch((data) => {
       console.log("ERROR @ getVechicleById Service", data);
       return Observable.throw(data);
     });
   }
 
-    editVechicleForSale(vechicle: VechicleTO) {
+  editVechicleForSale(vechicle: VechicleTO) {
     console.log("Inside Add Vechicle Services", vechicle);
 
     // return this.http.post(URL_CONST.BACK_END_HOST + 'vechicle', vechicle, { headers: this.getHeader() }).toPromise()
     //   .then(this.extractData)
     //   .catch(this.handleErrorPromise);
 
-    return this.http.put(URL_CONST.BACK_END_HOST + 'vechicle/'+vechicle.id, vechicle, this.getRequestOptions())
+    return this.http.put(URL_CONST.BACK_END_HOST + 'vechicle/' + vechicle.id, vechicle, this.getRequestOptions())
       .map((response: Response) => response.json());
 
   }

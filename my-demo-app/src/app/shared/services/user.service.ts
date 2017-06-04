@@ -74,4 +74,10 @@ export class UserService {
     this.token = sessionStorage.getItem('_token');
     this.userID = sessionStorage.getItem('_user');
   }
+
+
+  getToken() {
+    return this.token;
+  }
+
 }
