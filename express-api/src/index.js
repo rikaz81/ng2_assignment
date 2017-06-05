@@ -18,35 +18,8 @@ mongoose.Promise = global.Promise;
 //connect to mongoDB instance created on mongoLabs
 mongoose.connect('mongodb://root:root@ds151141.mlab.com:51141/osakamotorsdb');
 
-//tells express where your view will be
-// app.set('views', 'src/views');
-// app.set('view engine', 'pug');
-// //plug demo
-// app.get('/', (req, res) => {
-//     res.render('hello');
-// });
-
-
-//middleware ex: implementation of authentication
-app.use('/wizard', (req, res, next) => {
-    console.log("something happened");
-    let token = req.headers['x-access-token'];
-    if (!token) {
-        res.status(401).json({ message: "Not Authorized" });
-    } else {
-        jwt.verify(token, CONFIG.secretKey, (err, decoded) => {
-            if (err) {
-                res.status(401).json({ message: "Invalid Token" });
-            } else {
-                req.decoded = decoded;
-                next();
-            }
-        });
-    }
-});
-
 //skipauthentication temp
-// app.use('/wizard', (req, res) => {
+// app.use('/vechicle', (req, res) => {
 //     console.log("something happened");
 //     let token = req.headers['x-access-token'];
 //     // next();
@@ -123,8 +96,6 @@ app.use('/user', function (req, res, next) {
 
 
 app.use('/vechicle', VECHICLE_ROUTES);
-
-// app.use('/wizard', WIZARD_ROUTES);
 
 app.use('/user', USER_ROUTES);
 

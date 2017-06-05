@@ -32,7 +32,7 @@ export class VechicleService {
 
   public vechicleId: string;
 
-  constructor(private http: Http,private userService: UserService) { }
+  constructor(private http: Http, private userService: UserService) { }
 
   addVechicleForSale(vechicle: VechicleTO) {
     console.log("Inside Add Vechicle Services", vechicle);
@@ -59,9 +59,9 @@ export class VechicleService {
         vechicle.id = item._id;
         vechicle.brand = item.brand;
         vechicle.vechicleModel = item.vechicleModel;
-        vechicle.transmission = item.transmission;
+        vechicle.transmission = this.transmissionWrapper(item.transmission);
         vechicle.vtype = item.vtype;
-        vechicle.condition = item.condition;
+        vechicle.condition = this.conditionWrapper(item.condition);
         vechicle.modelYear = item.modelYear;
         vechicle.mileAge = item.mileAge;
         vechicle.price = item.price;
@@ -113,13 +113,11 @@ export class VechicleService {
   }
 
   deleteVechicleFromSale(itemId: string) {
-
-    console.log('Service deleteVechicleFromSale ', itemId);
+    console.log("Inside Delete Vechicle Service", itemId);
 
     return this.http.delete(URL_CONST.BACK_END_HOST + 'vechicle/' + itemId, { headers: this.getHeader() }).toPromise()
       .then(this.extractData)
       .catch(this.handleErrorPromise);
-
 
   }
 
@@ -137,7 +135,7 @@ export class VechicleService {
 
   getVechicleById(itemId: string) {
     return this.http.get(URL_CONST.BACK_END_HOST + 'vechicle/' + itemId, { headers: this.getHeader() }).map((response) => {
-      console.log(response.json());
+      // console.log(response.json());
       return response.json();
 
     }).catch((data) => {
@@ -147,14 +145,50 @@ export class VechicleService {
   }
 
   editVechicleForSale(vechicle: VechicleTO) {
-    console.log("Inside Add Vechicle Services", vechicle);
-
-    // return this.http.post(URL_CONST.BACK_END_HOST + 'vechicle', vechicle, { headers: this.getHeader() }).toPromise()
-    //   .then(this.extractData)
-    //   .catch(this.handleErrorPromise);
+    console.log("Inside Edit Vechicle Service");
 
     return this.http.put(URL_CONST.BACK_END_HOST + 'vechicle/' + vechicle.id, vechicle, this.getRequestOptions())
       .map((response: Response) => response.json());
 
+  }
+
+  private transmissionWrapper(transmission: string) {
+
+    switch (transmission) {
+      case "A":
+        transmission = "Auto";
+        break;
+      case "M":
+        transmission = "Manual";
+        break;
+      case "T":
+        transmission = "Tiptronic";
+        break;
+      default:
+        transmission = "Other";
+        break;
+    }
+
+    return transmission;
+  }
+
+  private conditionWrapper(condition: string) {
+
+    switch (condition) {
+      case "N":
+        condition = "Brand New";
+        break;
+      case "U":
+        condition = "Used";
+        break;
+      case "R":
+        condition = "Reconditioned";
+        break;
+      default:
+        condition = "";
+        break;
+    }
+
+    return condition;
   }
 }

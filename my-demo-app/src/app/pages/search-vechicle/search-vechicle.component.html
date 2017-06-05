@@ -70,8 +70,7 @@
             <div class="alert alert-dismissible alert-warning" *ngIf="(vechicles | filter:searchTerm:brand:condition).length == 0">
 
               <button type="button" class="close" data-dismiss="alert">&times;</button>
-              <p>Sorry!, we are unable to find searched text <span class="alert-link">{{searchTerm}}</span> Please refine your
-                search and try again.</p>
+              <p>Sorry!, we are unable to find Vechicles for the searched criteria <span class="alert-link">{{searchTerm}}</span>                Please refine your search and try again.</p>
             </div>
 
             <div class="alert alert-dismissible alert-success" *ngIf="(vechicles | filter:searchTerm:brand:condition).length !== 0">
@@ -100,11 +99,12 @@
                       <div class="col-md-8">
 
                         <h4>{{vechicle.brand}} - {{vechicle.vechicleModel}} {{vechicle.modelYear}}</h4>
-                        <div style="font-size: 14px;">{{vechicle.mileAge}} [{{vechicle.condition}}]</div>
-                        <div style="font-size: 14px;">{{vechicle.modelYear}}</div>
+                        <div style="font-size: 14px;"><label>Mileage :</label>{{vechicle.mileAge}} [{{vechicle.condition}}]</div>
+                        <div style="font-size: 14px;"><label>Year :</label> {{vechicle.modelYear}} <label> Transmission :</label>{{vechicle.transmission}}
+                        </div>
 
 
-                        <div style="font-size: 14px;">Price - LKR.{{vechicle.price}}
+                        <div style="font-size: 14px;"><label>Price :</label> LKR. {{vechicle.price}}
                           <label *ngIf="vechicle.priceNegotiable">Price Negotiable</label>
                         </div>
 
@@ -113,22 +113,9 @@
                         </div>
                         <div data-toggle="collapse" data-target="#demo"> More Info <span class="badge">>>></span></div>
                         <div id="demo" class="collapse" style="font-size: 14px;">{{vechicle.description}}</div>
-                        <!--<div style="font-size: 14px;">{{vechicle.description}}</div>-->
 
-                        <!--<a href="javascript:void(0);" (onclick)="hideme[vechicle.id] = !hideme[vechicle.id]">Click</a>
-                        <div [hidden]="hideme[vechicle.id]">Hide</div>-->
-                        <!--<div style="font-size: 14px;">Price - {{vechicle.price}}
-                <label *ngIf="vechicle.priceNegotiable === 'Y'">
-                  Price Negotiable
-                </label>
-              </div>
-              <div style="font-size: 14px;">Published : {{currentDate|date:"dd MMM yyyy HH:mm a"}}</div>
-
-              <div class="glyphicon glyphicon-phone-alt"> {{vechicle.contact.name}}, {{vechicle.contact.place}} , {{vechicle.contact.phone}}</div>-->
                         <div *ngIf="adminUser">
-                          <!--<button class="btn btn-primary btn-xs">
-                                                <i class="fa fa-plus" aria-hidden="true"></i>
-                                Edit</button>-->
+                          <br>
 
                           <button class="btn btn-danger btn-xs glyphicon glyphicon-remove-circle" (click)="deleteVechicleFromSale(vechicle.id)">
                                 <i class="fa fa-envelope-o" aria-hidden="true"></i>

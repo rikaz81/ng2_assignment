@@ -129,35 +129,8 @@ __WEBPACK_IMPORTED_MODULE_4_mongoose___default.a.Promise = global.Promise;
 //connect to mongoDB instance created on mongoLabs
 __WEBPACK_IMPORTED_MODULE_4_mongoose___default.a.connect('mongodb://root:root@ds151141.mlab.com:51141/osakamotorsdb');
 
-//tells express where your view will be
-// app.set('views', 'src/views');
-// app.set('view engine', 'pug');
-// //plug demo
-// app.get('/', (req, res) => {
-//     res.render('hello');
-// });
-
-
-//middleware ex: implementation of authentication
-app.use('/wizard', function (req, res, next) {
-    console.log("something happened");
-    var token = req.headers['x-access-token'];
-    if (!token) {
-        res.status(401).json({ message: "Not Authorized" });
-    } else {
-        __WEBPACK_IMPORTED_MODULE_5_jsonwebtoken___default.a.verify(token, __WEBPACK_IMPORTED_MODULE_6__config__["a" /* CONFIG */].secretKey, function (err, decoded) {
-            if (err) {
-                res.status(401).json({ message: "Invalid Token" });
-            } else {
-                req.decoded = decoded;
-                next();
-            }
-        });
-    }
-});
-
 //skipauthentication temp
-// app.use('/wizard', (req, res) => {
+// app.use('/vechicle', (req, res) => {
 //     console.log("something happened");
 //     let token = req.headers['x-access-token'];
 //     // next();
@@ -232,8 +205,6 @@ app.use('/user', function (req, res, next) {
 
 
 app.use('/vechicle', __WEBPACK_IMPORTED_MODULE_2__routes_vechicle_route__["a" /* VECHICLE_ROUTES */]);
-
-// app.use('/wizard', WIZARD_ROUTES);
 
 app.use('/user', __WEBPACK_IMPORTED_MODULE_3__routes_user_route___["a" /* USER_ROUTES */]);
 
@@ -379,9 +350,8 @@ var USER_ROUTES = router;
 //
 var router = __WEBPACK_IMPORTED_MODULE_0_express___default.a.Router();
 
-//get all wizards
+//get all vechicle 
 router.get('/', function (req, res) {
-    // res.send('All Wizards');
 
     __WEBPACK_IMPORTED_MODULE_1__models_vechicle_model__["a" /* Vechicle */].find(function (err, vechicles) {
         if (err) res.send(err);
@@ -392,7 +362,7 @@ router.get('/', function (req, res) {
     });
 });
 
-//add wizard
+//add vechicle 
 router.post('/', function (req, res) {
     console.log('inside add vechicle', req.body);
     var vechicle = new __WEBPACK_IMPORTED_MODULE_1__models_vechicle_model__["a" /* Vechicle */]();
@@ -421,13 +391,11 @@ router.post('/', function (req, res) {
             data: data
         });
     });
-
-    // res.send('Add Wizards');
 });
 
-//delete wizard
+//delete vechicle by ID
 router.delete('/:id', function (req, res) {
-    console.log('Vechicle Wizard of ID ---> ' + req.params.id);
+    console.log('Vechicle ID ---> ' + req.params.id);
 
     __WEBPACK_IMPORTED_MODULE_1__models_vechicle_model__["a" /* Vechicle */].remove({ _id: req.params.id }, function (err, data) {
         if (err) res.send(err);
@@ -442,7 +410,6 @@ router.delete('/:id', function (req, res) {
 
 //view vechicle by ID
 router.get('/:id', function (req, res) {
-    // res.send(`View Wizard of ID ---> ${req.params.id}`);
     console.log('Vechicle By Id ---> ' + req.params.id);
     __WEBPACK_IMPORTED_MODULE_1__models_vechicle_model__["a" /* Vechicle */].findById('' + req.params.id, function (err, vechicle) {
         if (err) {

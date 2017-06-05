@@ -5,9 +5,9 @@ import { Vechicle } from '../models/vechicle.model'
 //
 let router = express.Router();
 
-//get all wizards
+//get all vechicle 
 router.get('/', (req, res) => {
-    // res.send('All Wizards');
+
 
     Vechicle.find((err, vechicles) => {
         if (err)
@@ -22,7 +22,7 @@ router.get('/', (req, res) => {
 });
 
 
-//add wizard
+//add vechicle 
 router.post('/', (req, res) => {
     console.log('inside add vechicle', req.body);
     let vechicle = new Vechicle();
@@ -54,13 +54,13 @@ router.post('/', (req, res) => {
 
     });
 
-    // res.send('Add Wizards');
+
 });
 
 
-//delete wizard
+//delete vechicle by ID
 router.delete('/:id', (req, res) => {
-    console.log(`Vechicle Wizard of ID ---> ${req.params.id}`);
+    console.log(`Vechicle ID ---> ${req.params.id}`);
 
 
     Vechicle.remove({ _id: req.params.id }, (err, data) => {
@@ -80,7 +80,6 @@ router.delete('/:id', (req, res) => {
 
 //view vechicle by ID
 router.get('/:id', (req, res) => {
-    // res.send(`View Wizard of ID ---> ${req.params.id}`);
     console.log(`Vechicle By Id ---> ${req.params.id}`);
     Vechicle.findById(`${req.params.id}`, (err, vechicle) => {
         if (err) {
